@@ -1,7 +1,22 @@
 import numpy as np
 
+def ordinal_thresholds_uniform(beta, n_classes, alpha=0):
+    """
+    Returns a list of thresholds for ordinal regression given output space [alpha, beta] and number of classes.
+    The space is uniform.
+    :param beta: Maximum value of output space.
+    :param alpha: Minimum value of output space (default = 0).
+    :param n_classes: Number of classes (should equal output of last convolution, default = 100)
+    :return: List of thresholds for classes, including the left edge (=alpha) for the first class.
+    """
+    thresholds = [alpha]
+    for i in range(1, n_classes):
+        thresholds.append(alpha+(beta-alpha)/n_classes * i)
 
-def ordinal_thresholds_exp(beta, alpha=0, n_classes=100, eps=1):
+    thresholds.append(beta)
+    return thresholds
+
+def ordinal_thresholds_exp(beta, n_classes, alpha=0, eps=1):
     """
     Returns a list of thresholds for ordinal regression given output space [alpha, beta] and number of classes.
     The space is exponential.
@@ -34,12 +49,6 @@ def depth_to_ordinal(matrix, thresholds):
         prev = c
     return ordinal_labels.squeeze()
 
-def pixel_ordinal_loss(pixel):
-    pass
+def ordinal_loss(y, y_true):
+    raise NotImplementedError
 
-beta = 100
-K = 25
-Y = np.random.uniform(high=beta, size=(10, 9, 12, 1))
-thresh = ordinal_thresholds_exp(beta=beta, n_classes=K)
-
-Y_hat = depth_to_ordinal(Y, thresh)
