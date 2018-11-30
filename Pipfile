@@ -5,14 +5,28 @@ name = "pypi"
 
 [packages]
 jupyterlab = "*"
-pandas = "*"
+scipy = "*"   # to load .mat files
+matplotlib = "*"
+Pillow = "*"
+numpy = "*"
+keras = "*"
+# Pandas optional deps
 numexpr = "*"   # for speedups
 bottleneck = "*"   # for speedups
-scipy = "*"   # to load .mat files
-matplotlib= "*"
-Pillow = "*"
+pandas = "*"
+## PyTorch optional deps
+mkl = "*"
+mkl-include = "*"
+pyaml = "*"
+cmake = "*"
+cffi = "*"
+torch = {file = "http://download.pytorch.org/whl/cpu/torch-0.4.1-cp36-cp36m-linux_x86_64.whl"}
+torchvision = "*"
+tensorflow = "*"
+pydot = "*"
+opencv-python = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.7"
+python_version = "3.6.7"
