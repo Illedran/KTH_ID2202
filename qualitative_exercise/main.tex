@@ -1,0 +1,240 @@
+\documentclass[a4paper,11pt]{article}
+% \usepackage[DIV=13]{typearea}
+\usepackage{a4wide}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx,fancyhdr,amsmath,amssymb,wrapfig}
+\usepackage{dsfont}
+\usepackage{latexsym}
+\usepackage{mathtools}
+\usepackage{url}
+\usepackage{mathtools}
+\usepackage[htt]{hyphenat}
+\usepackage[tableposition=top]{caption}
+\usepackage[colorlinks,unicode]{hyperref}
+\hypersetup{
+    urlcolor={cyan}
+}
+%----------------------- Macros and Definitions --------------------------
+
+\setlength\headheight{20pt}
+\addtolength\topmargin{-10pt}
+\addtolength\footskip{20pt}
+
+\DeclareMathOperator*{\argmin}{argmin}% no space, limits underneath in displays
+\newcommand{\X}{\mathcal{X}}% Feature space
+\newcommand{\Y}{\mathcal{Y}}% Label Space
+\newcommand{\ind}{\mathds{1}}% Indicator function e.g. 1{x>1}.
+\newcommand{\prob}{\mathbb{P}}% Probability
+\newcommand{\E}{\mathbb{E}}% Expectation
+\newcommand{\F}{\mathcal{F}}% Function Space
+\newcommand{\sh}{\mathcal{S}}% Shatter coefficient
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}% Norm
+\pagestyle{fancyplain}{%
+\fancyhf{}
+\lhead{\fancyplain{\bfseries KTH Royal Institute of Technology}{\bfseries Qualitative Assignment}}
+\rhead{\fancyplain{\bfseries II2202 Research Methodology}{\bfseries II2202 Research Methodology}}
+\lfoot{\fancyplain{}{Andrea Nardelli, Tianze Wang}}
+\rfoot{\fancyplain{}{\thepage}}
+}
+
+\newcounter{rcounter}
+\newenvironment{rlist}%
+{\begin{list}{(\alph{rcounter})}{\usecounter{rcounter}}}{\end{list}}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+
+%-------------------------------- Title ----------------------------------
+\title{\vspace{-1.2\baselineskip}\Huge \sffamily\bfseries
+ Qualitative Assignment\\
+}
+\author{
+    \begin{tabular}[t]{c@{\extracolsep{3.5em}}c} 
+        Andrea Nardelli & Tianze Wang \\
+        \texttt{andnar@kth.se} & \texttt{tianzew@kth.se} \\ 
+    \end{tabular}
+}
+\date{\today}
+
+%--------------------------------- Text ----------------------------------
+\begin{document}
+\maketitle
+
+\section*{Tasks}
+\subsection*{Task 1}
+
+
+\subsubsection*{Qualitative study questions}
+Please find the updated questions for parents in Table~\ref{tab:parent_questions} and the updated questions for schools in Table~\ref{tab:school_questions}.
+
+\begin{table}
+    \centering
+    \caption{Table of updated questions for parents of children between 7-12 years old.}
+    \label{tab:parent_questions}
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{|p{6cm}|p{4cm}|p{5cm}|}
+    \hline
+    \textbf{Question}                        & \textbf{Options, if any}                             & \textbf{Comment}                                                                                            \\ \hline
+    1. What is your gender identity?         & male, female, other, prefer not to disclose          & The previous question did not take into account non-binary gender identifications.                          
+    \\ \hline
+    2. What is your age group?               & $18-24, 25-34, 35-44, 45-54, 55-64, 65-74, 75-84, 85+$    & We have decided to use the bands from the UK Office of National Statistics\footnotemark~ for ages above 18. 
+    \\ \hline
+    3. How would you rank your IT knowledge? & None, beginner, intermediate, expert                 & The wording of the question has been changed.             
+    \\ \hline
+    4. Are you aware of children's activity over the Internet? If so, do you monitor it deliberately? & Yes/No; Yes/No  & Reformulate the question to make it less intense         
+    \\ \hline
+    5a. On a degree from $0$ to $5$ with $5$ being the worst, which one do you think best quantifies the degree that your children are confronted with inappropriate material on the Internet?  &  $0, 1, 2, 3, 4, 5$  & The previous question did not take into account of non-binary opinion over the question. 
+    \\ \hline
+    5b If so, what do you think is the major source of inappropriate content that children are confronted with?     & Open answers.   & A follow-up question that to better understand the inappropriate content on the Internet that are faced by children.
+    \\ \hline
+    6. On a degree from $0$ to $5$ with $5$ being the best, how well to do think you have instructed your children about the benefits and dangers of the Internet? & $0, 1, 2, 3, 4, 5$  &  Reformulate the question to include the non-binary opinion within the answer.   
+    \\ \hline
+    7. Can you say something about the Internet parental control tools that you are using?  & Not using anything, Parental control software, Internet services (like OpenDNS), Hardware configuration (like blocking sites and words from a Net-gear router). & Explanations might be needed for what each category includes.   
+    \\ \hline
+    8a. On a degree from $0$ to $5$ with $5$ being the most wanted, in what degree do you feel you may need some tutorial or manual to learn how to make Internet a safer place for children?  & $0, 1, 2, 3, 4, 5$ & Include the non-binary opinion on the question.
+    \\ \hline
+    8b. If so, what kind of tutorial or manual do you think is needed?      & Open answers.     & A follow-up question to better understand the tutorial needed.
+    \\ \hline
+    \end{tabular}%
+    }
+\end{table}
+
+\begin{table}
+    \centering
+    \caption{Table of updated questions for schools.}
+    \label{tab:school_questions}
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{|p{6cm}|p{3cm}|p{6cm}|}
+    \hline
+    \textbf{Question}                        & \textbf{Options, if any}                             & \textbf{Comment}                                                                                            \\ \hline
+    1a. Do children have free access to Internet at School?     & Yes/No.   & Not much to change. 
+    \\ \hline
+    1b. If children do have free access to Internet, when do they usually access the Internet?      & Open answers.     & A follow up question to understand when do children usually have access to the Internet at school
+    \\ \hline
+    2a. On a degree from $0$ to $5$ with $5$ being the most supervision, what would you consider as the degree that  teachers supervise children’s activities on the Internet?     & $0, 1, 2, 3, 4, 5$      & Change the binomial answer to suit on non-binomial opinions.
+    \\ \hline
+    2b. If there is supervision involved, when is it happening and what are usually the content that is being supervised?     & Open answers.     & A follow up to have better understanding of Internet supervision at schools.
+    \\ \hline
+    3a. On a degree from $0$ to $5$ with $5$ being the most educated, what would you consider as the degree that quantifies how well schoolteachers educated on how to make Internet a safe place for children?      & $0, 1, 2, 3, 4, 5$    & Adapt the question to suit non-binomial answers.
+    \\ \hline
+    3b. If they are not well educated, what's your opinion on the part that is lacking for the education?   & Open answers.    & To have a better understanding on what is lacking from the education.
+    \\ \hline
+    4a. Does your school follow any official program that raises awareness about Internet dangers?      & Yes/No.    & Nothing changed for this question.
+    \\ \hline
+    4b. If so, can describe more on what kind of program that you have?     & Open answers.     & A follow-up question to better understand what kind of program that schools have to raise awareness about Internet dangers.
+    \\ \hline
+    5. On a degree from $0$ to $5$ with $5$ being the most needed, to what degree do you think that your school may need a tutorial (manual) on how to make Internet a safer place for children?  &  $0, 1, 2, 3, 4, 5$  & Adapt the question to suit non-binomial answers.
+    \\ \hline
+    \end{tabular}%
+    }
+\end{table}
+
+
+\subsubsection*{Questions that is better not to be asked}
+In our opinion, the following question should be though twice before asking:
+\begin{itemize}
+    \item \textbf{Question} $\mathbf{4}$ in Table \ref{tab:parent_questions} should be dealt with care as some people might be sensitive with the word ``monitor'' and having this kind of questions might lead to answers that fail to reflect actual opinions. Perhaps, another approach to the same question is by asking ``Are you aware of children's activities over the Internet?'' with a following question like ``If so, through what channel do you know it?
+\end{itemize}
+
+
+\subsubsection*{Better formulation of the questions}
+Is there a better way to formulate these questions so that they address the two key questions as on the following page?
+
+
+As the purpose of this study on Children’s Internet Safety is to gather information in order to gain a better understanding of common threats children face online and the aim is to build a website is to reach out to a larger number of people who are faced with problems similar to those presented in this study, specifically, another question that could be included in the survey is that: ``What do you consider as the top $3$ source of threats that children are facing while using the Internet?'' to bring the awareness of the problem.
+
+\footnotetext{\url{https://meta.wikimedia.org/wiki/Survey\_best\_practices\#Age}}
+
+\clearpage
+\subsection*{Task 2}
+The purpose of the survey is to investigate what people think about the word-processing program or text editors including but are not limited to Microsoft Word, Open office/LibreOffice, Google Docs,
+LaTex, emacs, NotePad. To achieve a good understanding of what people's opinions are, we designed the following survey.
+
+
+In addition to demographics questions (age/sex/occupation/etc), our survey contains the following questions:
+
+\begin{enumerate}
+    \item How much of your average work/study day do you spend on producing documents?
+    Options: less than $1$ hour, $1-2$ hours, $2-3$ hours, $3-4$ hours, $4+$ hours.
+    \item Do you switch software based on the document you are producing or the target audience it is meant for? Please elaborate.
+    \item In Table~\ref{tab:ratings}, please give a score from 1 to 10 where 10 is best for each parameter of the following word processing software. Feel free to skip software you have not used or add your favourite if it is not in the list.
+    \begin{table}[!h]
+    \centering
+    \caption{Ratings table.}
+    \label{tab:ratings}
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{l|l|l|l|l|}
+    \cline{2-5}
+                                                             & \textbf{Word} & \textbf{Word-like (Libre/OpenOffice)} & \textbf{LaTeX} & \textbf{Google Docs} \\ \hline
+    \multicolumn{1}{|l|}{\textbf{Different functionalities}} &               &                                       &                &                      \\ \hline
+    \multicolumn{1}{|l|}{\textbf{Appeal of interface}}       &               &                                       &                &                      \\ \hline
+    \multicolumn{1}{|l|}{\textbf{Styling of document}}       &               &                                       &                &                      \\ \hline
+    \multicolumn{1}{|l|}{\textbf{Easy to use}}               &               &                                       &                &                      \\ \hline
+    \multicolumn{1}{|l|}{\textbf{Time-consuming}}            &               &                                       &                &                      \\ \hline
+    \end{tabular}%
+    }
+    \end{table}
+    \item Has it ever occurred to you to have to switch to a different software because you were looking for a particular functionality? If yes, please describe one such scenario. 
+    \item Do you pay for your software or use free alternatives? Does your organization offer free access to premium software?
+\end{enumerate}
+
+\clearpage
+\section*{Peer Review}
+Peer review of Davor Ljubenkov and Susanna Pozzoli.
+
+\noindent Similar concerns are shared regarding the way questions are formulated, especially in the demographics part. The other groups suggest adding questions to understand marital status (or better yet, status of ``committed relationships''), as these could provide additional insights in how they reply to the questions.
+
+\subsection*{Word Processing Software Survey}
+
+% \begin{enumerate}
+%     \item What is your age? 18-30.
+%     \item What is the highest level of education you have completed? Bachelor's degree.
+%     \item Digital competence level? Proficient user.
+%     \item Which operating System do you use the most? Linux.
+%     \item How frequently do you use a word processor? Often.
+%     \item Select the most important word processing feature among ``templating'', ``spelling and grammar check'', ``autocomplete'', ``version history'', ``other''. Autocomplete, as if done well it can automatically suggest correct words, lowering the need for a spell checker.
+% \end{enumerate}
+
+\noindent \textbf{Susanna's survey}:
+
+\begin{enumerate}
+    \item 1–2 hours per day
+    \item I choose one word processor instead of another on the basis of the document. For example, if I need to share the document, then I would choose Google Docs; if I need bibliography management, then I would choose LaTeX.
+    \item See Table~\ref{tab:susanna_answers}.
+        \begin{table}[h]
+        \centering
+        \caption{Results}
+        \label{tab:susanna_answers}
+            \resizebox{\textwidth}{!}{%
+        \begin{tabular}{|l|l|l|l|l|}
+        \hline
+                                 & Word & Word-like (Libre/OpenOffice) & LaTeX & Google Docs \\ \hline
+        Different funtionalities & 9    & ?                            & 10    & 7           \\ \hline
+        Appeal of interface      & 7    & ?                            & 4     & 9           \\ \hline
+        Styling of document      & 8    & ?                            & 8     & 8           \\ \hline
+        Easy to use              & 8    & ?                            & 3     & 9           \\ \hline
+        Time-consuming           & 8    & ?                            & 5     & 9           \\ \hline
+        \end{tabular}}
+        \end{table}
+    \item I often switch from Microsoft Office Word to Google Docs because of collaboration in real-time.
+    \item My organization provides Microsoft Office.
+\end{enumerate}
+
+
+
+\noindent \textbf{Davor's survey}:
+\begin{enumerate}
+    \item 3-4 hours
+    \item Both on the document and target audience. Target audience is more important because it defines which document to use.
+    \item different functionalities: word(7), latex(8), google docs(3)
+            appeal of interface: word(8), latex(6), google docs(5)
+            styling of document: word(6), latex(8), google docs(2)
+            easy to use: word(7), latex(3), google docs(8)
+            time-consuming: word(3), latex(4), google docs(7)
+    \item Yes, for example from word to latex for the availability of layouts for CV that were quite easily editable and esthetically pleasing.
+    
+    \item No, I do not pay. Either it ls already installed on the device or it is free. University offers some limited arrangements of text processing software
+
+\end{enumerate}
+
+
+\end{document} 
+

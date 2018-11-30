@@ -1,0 +1,293 @@
+\title{Exploration of Space Discretization Models for Single Image Depth Estimation}
+\author{
+        \textsc{Andrea Nardelli}
+            \qquad
+        \textsc{Tianze Wang}
+        \mbox{}\\
+        \normalsize
+            \texttt{andnar}
+        \textbar{}
+            \texttt{tianzew}
+        \normalsize
+            \texttt{@kth.se}
+}
+\date{\today}
+
+\documentclass[12pt,twoside]{article}
+
+\usepackage[paper=a4paper,dvips,top=1.5cm,left=1.5cm,right=1.5cm,
+    foot=1cm,bottom=1.5cm]{geometry}
+
+
+%\usepackage[T1]{fontenc}
+%%\usepackage{pslatex}
+\renewcommand{\rmdefault}{ptm} 
+\usepackage{mathptmx}
+\usepackage[scaled=.90]{helvet}
+\usepackage{courier}
+%
+\usepackage{bookmark}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+%%----------------------------------------------------------------------------
+%%   pcap2tex stuff
+%%----------------------------------------------------------------------------
+ \usepackage[dvipsnames*,svgnames]{xcolor} %% For extended colors
+ \usepackage{tikz}
+ \usetikzlibrary{arrows,decorations.pathmorphing,backgrounds,fit,positioning,calc,shapes}
+
+%% \usepackage{pgfmath}	% --math engine
+%%----------------------------------------------------------------------------
+%% \usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc} % inputenc allows the user to input accented characters directly from the keyboard
+\usepackage[english]{babel,isodate}
+%% \usepackage{rotating}		 %% For text rotating
+\usepackage{array}			 %% For table wrapping
+\usepackage{graphicx}	                 %% Support for images
+\usepackage{float}			 %% Suppor for more flexible floating box positioning
+\usepackage{color}                       %% Support for colour 
+\usepackage{mdwlist}
+\usepackage{amsmath}
+\usepackage{amssymb}
+%% \usepackage{setspace}                 %% For fine-grained control over line spacing
+%% \usepackage{listings}		 %% For source code listing
+%% \usepackage{bytefield}                %% For packet drawings
+\usepackage{tabularx}		         %% For simple table stretching
+%%\usepackage{multirow}	                 %% Support for multirow colums in tables
+\usepackage{dcolumn}	                 %% Support for decimal point alignment in tables
+\usepackage{url}	                 %% Support for breaking URLs
+\usepackage[perpage,para,symbol]{footmisc} %% use symbols to ``number'' footnotes and reset which symbol is used first on each page
+
+%% \usepackage{pygmentize}           %% required to use minted -- see python-pygments - Pygments is a Syntax Highlighting Package written in Python
+%% \usepackage{minted}		     %% For source code highlighting
+
+%% \usepackage{hyperref}		
+\usepackage[all]{hypcap}	 %% Prevents an issue related to hyperref and caption linking
+%% setup hyperref to use the darkblue color on links
+%% \hypersetup{colorlinks,breaklinks,
+%%             linkcolor=darkblue,urlcolor=darkblue,
+%%             anchorcolor=darkblue,citecolor=darkblue}
+
+%% Some definitions of used colors
+\definecolor{darkblue}{rgb}{0.0,0.0,0.3} %% define a color called darkblue
+\definecolor{darkred}{rgb}{0.4,0.0,0.0}
+\definecolor{red}{rgb}{0.7,0.0,0.0}
+\definecolor{lightgrey}{rgb}{0.8,0.8,0.8} 
+\definecolor{grey}{rgb}{0.6,0.6,0.6}
+\definecolor{darkgrey}{rgb}{0.4,0.4,0.4}
+%% Reduce hyphenation as much as possible
+\hyphenpenalty=15000 
+\tolerance=1000
+
+%% useful redefinitions to use with tables
+\newcommand{\rr}{\raggedright} %% raggedright command redefinition
+\newcommand{\rl}{\raggedleft} %% raggedleft command redefinition
+\newcommand{\tn}{\tabularnewline} %% tabularnewline command redefinition
+
+%% definition of new command for bytefield package
+\newcommand{\colorbitbox}[3]{%
+	\rlap{\bitbox{#2}{\color{#1}\rule{\width}{\height}}}%
+	\bitbox{#2}{#3}}
+
+%% command to ease switching to red color text
+\newcommand{\red}{\color{red}}
+%%redefinition of paragraph command to insert a breakline after it
+\makeatletter
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+  {-3.25ex\@plus -1ex \@minus -.2ex}%
+  {1.5ex \@plus .2ex}%
+  {\normalfont\normalsize\bfseries}}
+\makeatother
+
+%%redefinition of subparagraph command to insert a breakline after it
+\makeatletter
+\renewcommand\subparagraph{\@startsection{subparagraph}{5}{\z@}%
+  {-3.25ex\@plus -1ex \@minus -.2ex}%
+  {1.5ex \@plus .2ex}%
+  {\normalfont\normalsize\bfseries}}
+\makeatother
+
+\setcounter{tocdepth}{3}	%% 3 depth levels in TOC
+\setcounter{secnumdepth}{5}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% End of preamble
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\headrulewidth}{0pt}
+\lhead{II2202, Fall 2018, Period 1-2}
+\chead{Draft project plan}
+\rhead{\date{\today}}
+
+\makeatletter
+\let\ps@plain\ps@fancy 
+\makeatother
+
+\setlength{\headheight}{15pt}
+\begin{document}
+
+\maketitle
+
+
+\begin{abstract}
+\label{sec:abstract}
+
+This work aims to explore the use of different discretization functions in an ordinal regression framework for monocular depth estimation of a single image. Existing work in this field uses uniform space discretizations without taking into account relative error and without weighting under- or overestimation differently, an addition that is in our opinion application-critical in a practical setting. Our goal is hence exploring these discretizations for the purpose of improving the accuracy of depth estimation, and investing how the ordinal regression framework can be applied to other depth estimation models.
+
+\end{abstract}
+%%\clearpage
+
+\selectlanguage{english}
+\tableofcontents
+
+% \section*{List of Acronyms and Abbreviations}
+% \label{list-of-acronyms-and-abbreviations}
+
+% This document requires readers to be familiar with terms and concepts described in \mbox{RFC~1235} \cite{john_ioannidis_coherent_1991}. For clarity we summarize some of these terms and give a short description of them before presenting them in next sections.
+
+% \begin{basedescript}{\desclabelstyle{\pushlabel}\desclabelwidth{10em}}
+% \item[IPv4]					Internet Protocol version 4 (RFC~791 \cite{postel_internet_1981})
+% \item[IPv6]					Internet Protocol version 6 (RFC~2460 \cite{deering_internet_1998})
+% \end{basedescript}
+
+
+\clearpage
+\section{Introduction}
+
+\subsection{Aim \& Objective}
+Depth estimation is the process of predicting the depth map of a 2D image or video. While current methods for estimating depth from videos or images from dual cameras, depth estimation performance in the monocular vision are still to be improved. The aim of the research is to improve the performance of monocular depth estimation from a single image (abbr. as MDE hereafter).
+
+The objective of the research is to find non-uniform discretization spaces that can be used to increase the accuracy of prediction for MDE problems, which in turn can boost the performance of 3D space mapping in fields such as robotics navigation, self-driving cars, human pose estimation and more. 
+
+\subsection{Goals}
+The first goal is identifying non-uniform discretization strategies that can improve the performance of \cite{huan_fu_deep_2018} in the examined datasets. While the logarithm-based strategies used in \cite{huan_fu_deep_2018} shows performance improvement, it would also be interesting to see if other strategies would work and what might be the key factors and rationale for choosing a particular transformation.
+
+A secondary goal of the project is investigating how the ordinal regression and non-uniform discretization strategies affect the performance of other MDE models. As shown in \cite{huan_fu_deep_2018}, ordinal regression which ``aims to learn a rule to predict labels from an ordinal scale'' has demonstrated an advantage in MDE models.
+
+\section{Background}
+Depth information can be estimated from stereo images or motion sequences, which have relatively rich information for understanding the 3D structures of the scene. However, estimating depths from a single image is yet another challenge for the simple reason that depth remains uncertain when only local image features are given. Various monocular cues, like texture variations and gradients, defocus, color/haze, etc, which contain some depth related information can also offer crucial support to depth estimations \cite{saloni_bahadur_literature_2017}. Yet another problem is that these cues might not be available in some datasets.
+
+
+\subsection{Theoretical Framework}
+% what are images
+% image -> function -> depth
+An image is formalized as a real-valued matrix $I$ with dimensions $M \times N$. The depth map $D_I$ represents the depth map of image $I$ with the same dimensions and represents the ``ground truth'' of depth map estimation. The goal of depth estimation is creating a function $f$ which outputs $\hat{D}_I$, an approximation of $D_I$ with dimensions $P \times Q$ where $P \leq M$ and $Q \leq N$. 
+We can hence define $f$ as
+\[
+    f(I): \mathbb{R}^{M \times N} \rightarrow \mathbb{R}^{P \times Q}.
+\]
+Note that the estimated depth map can be smaller than the ground truth: this is sometimes done in order to increase the speed of computation and model training.
+\smallskip
+Fu et al. \cite{huan_fu_deep_2018} introduce an ordinal regression framework in which the task of approximating the depth is transformed to predicting an ordinal class out of $K$ classes for each element in $\hat{D}_I$. In other words, each classes corresponds to a depth range and each element in $\hat{D}_I$ belongs to one of these classes. As mentioned, this transformation to an ordinal regression is achieved through a logarithmic transformation which is formalized as
+\[
+    t_i = e^{\log(\alpha) + \frac{i\cdot\log(\beta/\alpha)}{K}}
+\]
+where $[\alpha, \beta]$ represent the original regression range and $t_i \in \{t_0, t_1, \ldots, t_K\}$ are the discretization thresholds.
+
+
+\subsection{Literature Review}
+In this subsection, some of the state-of-the-art methods for depth estimation of a single image will be reviewed.
+
+Eigen et al. \cite{david_eigen_depth_2014} present a new method that address the problem by using two deep network stacks where one of them makes a coarse global prediction based on the entire image, and the other refines this prediction locally. They also use scale-invariant errors to measure depth relations rather than using scale.  
+
+He et al. \cite{lei_he_learning_2018} demonstrate experimentally that focal length has a great influence on accurate depth recovery. They also propose a new deep neural network to estimate depth through effectively fusing the middle-level information on the fixed focal-length dataset which outperforms the state-of-the-art methods developed upon pretrained VGG.
+
+Zhang et al. \cite{yinda_zhang_deep_2018} aim to solve the problem that commodity-level depth cameras often fail to capture depth information for shiny, bright, transparent, and distant surfaces. They have proposed a deep network that takes an RGB image and predicts dense surface normals and occlusion boundaries. Then these estimations are combined together with the raw depth information provided by the camera to generate the depths for all pixels of the image including the missing ones from the camera. They have also shown experimentally that their proposed approach has better depth completions than its counterparts.
+
+Qi et al. \cite{xiaojuan_qi_geonet:_2018} propose Geometric Neural Network (GeoNet), which is built on top of two-stream CNNs, to jointly predict depth and surface normal maps from a single image. The key contribution of the model is incorporating geometric relation between depth and surface normal via their new depth-to-normal and normal-to-depth networks. Experiments have shown that these two networks make the underlying model to efficiently estimate depth and surface normal in a high consistency manner and achieves top performance for surface normal estimation and state-of-the-art accuracy for depth estimation.
+
+Lee et al. \cite{jae-han_lee_single-image_2018} propose a deep learning algorithm for single-image depth estimation based on Fourier frequency domain analysis. Apart from a convolutional neural network, they also propose a depth-balanced Euclidean loss which is reliable for training a wide variety of networks for depths estimations. They also take advantage of complementary properties of small and large ratio cropped images by combining the multiple candidates in the frequency domain. Experiments have shown that the proposed algorithm can achieve state-of-the-art performance.
+
+Atapour-Abarghouei et al. \cite{amir_atapour-abarghouei_real-time_2018} observe that while monocular depth estimation via learning-based approaches yields promising results, most of them rely on large volumes of ground truth depth data or predict disparity as an intermediary step with a secondary supervisory signal. To solve this, they introduce image style transfer and adversarial training to solve the domain bias brought by pixel-perfect synthetic data. Experiment results have shown that their approach is comparable to state-of-the-art techniques.
+
+\section{Research Questions \& Hypotheses}
+
+\subsection{Problem statement}
+Previous evaluation measures for MDE did not consider the relative error of an estimation compared to its ground truth, which can result in depth maps that are inaccurate for objects close to the camera. For example, the relative error between a depth prediction of 2m with ground truth 1m is 100\%, whereas a prediction of 101m with ground truth 100m is 1\%.
+
+The main contribution of \cite{huan_fu_deep_2018} consists of using a discretization to transform the output space into an ordinal regression in a logarithmic space which takes into account relative error. This project will investigate different strategies/transformations in order to implement this discretization. In addition, it will explore the inverse transformation (i.e. from the discretized output space back to the original regression) for improved performance evaluation.
+
+\subsection{Problem}
+Except for the contribution in \cite{huan_fu_deep_2018}, the current problem with MDE evaluation measures is that they do not take into account the relative error of a prediction with regards to its ground truth.
+
+\subsection{Hypothesis}
+The use of non-uniform discretization spaces can improve the performance of existing solutions of MDE problems and can specialize a model for particular applications.
+The ordinal regression framework can be applied as a general approach in MDE models.
+
+\section{Research Methodology}
+\label{sec:method}
+
+\subsection{Organization}
+The project will be conducted in a two-person group, expanding upon the work previously accepted in the 2018 edition of CVPR (Conference on Computer Vision and Pattern Recognition).
+
+\subsection{Allocation of responsibilities}
+Both team members are responsible for writing the project plan and report, in addition to researching existing bibliography connected to the main paper we want to expand upon.
+
+In particular, Tianze Wang is responsible for managing the computing resources, contacting original authors if needed, obtaining and preprocessing the datasets.
+
+Andrea Nardelli is responsible for implementing the models and presenting the work.
+
+\subsection{Method}
+The research will use an experimental methodology by testing different discretization strategies and evaluating their results. The efficacy of non-uniform discretization will be empirically tested on other MDE models.
+
+The performance of the models will be analyzed quantitatively using standard MDE metrics, whereas the output depth maps as images will be analyzed qualitatively.
+
+\subsection{Tasks \& Procedures}
+Due to the fact that the storage and computation needed by this research goes beyond our current capabilities, we asked the makers of Hops\footnote{\url{https://www.hops.io/}} for support which they generously provided us. 
+All the experiments will be A virtual machine will be prepared to run the experiments, including preprocessing the image datasets.
+
+The MDE model mentioned in \cite{huan_fu_deep_2018} together with a number of different discretization strategies will be re-implemented with the PyTorch framework, as the original Caffe implementation with noninternal packages is not available. The different discretization strategies will be evaluated on the same public datasets used in \cite{huan_fu_deep_2018}. Results of the experiments will be analyzed and a comparison across different strategies will be made through a quantitative and qualitative analysis of the output depth maps. Lastly, the ordinal regression and non-uniform discretization approach will be evaluated on other MDE models.
+
+A report detailing all of the work will be provided.
+
+\subsection{Data Collection}
+The data comes from publicly available datasets used in the field of computer vision. In particular as we aim to reproduce the work of \cite{huan_fu_deep_2018}, the datasets used are KITTI \cite{doi:10.1177/0278364913491297}, Make3D \cite{ashutosh_saxena_learning_2006, ashutosh_saxena_make3d:_2009}, NYU Depth v2 \cite{silberman2012indoor}.
+
+\section{Expected Outcomes}
+Apart from the discretization strategies mentioned in \cite{huan_fu_deep_2018}, we are expecting that we will find one or more other discretization strategies that will also improve the performance of the depth estimation model.
+
+To be more specific, we have observed that in certain applications, e.g. autonomous driving, a false negative where the model estimates a near point to be far away is more of a serious problem than a false positive where a far away point is estimated to be near the vehicle. While the former case might lead to serious accident, the latter case will cost no more than the vehicle to stop. Thus, we would also like to explore if there is any discretization strategy that punish false negatives more than false positives.
+
+Apart from that, we are also interested in finding out the role of ordinal regression in depth estimation model.
+
+
+\section{Milestones}
+The project started on the \printdate{2018-09-19} and will end on the \printdate{2019-01-15}. The following list covers the milestones of our project both in terms of deliverables (proposals, plans, reports) and in terms of work plan. Already achieved milestones are in bold.
+\begin{enumerate}
+    \item \textbf{\printdate{2018-09-19}}: First draft of project proposal is submitted.
+    \item \textbf{\printdate{2018-09-21}}: Presentation and peer review of ethics \& sustainability concerns for the proposed project are submitted.
+    \item \printdate{2018-10-12}: First draft of research plan and presentation is submitted for peer review.
+    \item \printdate{2018-10-15}: The data from the public datasets is obtained and preprocessing pipeline is written and executed, resulting in the preprocessed data.
+    \item \printdate{2018-10-29}: The original model is re-implemented as described in the previous sections.
+    \item \printdate{2018-11-05}: Particular care is given to reproduce the results presented in \cite{huan_fu_deep_2018}, in order to identify possible errors in our implementation. Simultaneously, different discretization strategies will be implemented as described in Section~\ref{sec:method}.
+    \item \printdate{2018-11-19}: Testing of the examined discretization strategies in different MDE models.
+    \item \printdate{2018-11-30}: First draft of research report and presentation is submitted for peer review.
+    \item \printdate{2018-12-03}: In parallel to completing the last batch of analysis, start work on collecting results and incorporate them into the draft of the report.
+    \item \printdate{2018-12-10}: Peer review \& opposition on latest report draft.
+    \item \printdate{2018-12-17}: Code freeze.
+    \item \printdate{2019-01-11}: By this date, final seminar and opposition with peer review will be completed.
+    \item \printdate{2019-01-15}: Turn-in of final project report.
+\end{enumerate}
+
+\section{Risks \& Ethics and Sustainability}
+In the field of computer vision, ethical concerns are a major source of discussion. Our research in depth estimation take into account these aspects. The most common controversial application regards use of computer vision on images from CCTV cameras in a kind of tradeoff of security vs privacy. Whereas on one side applying computer vision may help in providing additional security by e.g. tracking criminal perpetrators, on the other side it may result in an infringement of privacy for people not connected to the crime. Similar concerns arise when considering cameras in public places and how these can be used for surveillance. In particular our research into depth estimation could improve existing technologies for tracking individuals with these security cameras or even in espionage situations in which an inaccessible space is 3D mapped to reconstruct a normally inaccessible building.
+
+In an example application of depth estimation for autonomous driving, our research must considers the risks of inaccurate predictions. For example, a depth prediction that is larger than what the actual depth is (we can think of it as a ``false positive'') may result in an autonomous car thinking it has more space to navigate than what it actually has. For this application, this can be argued to be worse than a ``false negative'' in which a smaller than reality prediction is created by the system.
+
+Given the risks mentioned above, one might ask if it is ethical to release our work as open-source, which makes it easily available not only to the ethical user but also to users with negative intents in mind. Indeed this is a major concern for all research and its possible applications, and in the case of open-source one could argue that by publishing our code/implementation, nefarious applications can be created with very little effort. We have two counter points to this:
+\begin{enumerate}
+    \item Ethical applications that make use of our work are similarly easier to create and contribute back to research in a virtuous loop, creating a positive environment where others can build on our work inspired by the Sustainable Development Goal \#17\footnotemark{} which mentions ``strengthening the means of implementation and revitalise the global partnership for sustainable development''.
+    \item As history reminds us, nefarious applications of research are always a possibility. We personally believe that an ethical reflection is mandatory by users of our work, we condemn any non-ethical use of our work or use which harms individuals or their privacy.
+\end{enumerate} 
+
+This work also aims to contribute to Sustainable Development Goal \#8\footnotemark[\value{footnote}]{} which reads ``promoting sustained, inclusive and sustainable economic growth, full and productive employment, and decent work for all'' by contributing to research that allows the automation of tedious, manual and excruciating jobs and the requalification of employees for better working \& life conditions.
+
+\footnotetext{\url{https://sustainabledevelopment.un.org/}}
+
+\clearpage
+\bibliography{ref}
+\bibliographystyle{myIEEEtran}
+
+
+\end{document}

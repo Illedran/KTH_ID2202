@@ -1,0 +1,172 @@
+
+@inproceedings{amir_atapour-abarghouei_real-time_2018,
+	address = {Salt Lake City, Utah, United States},
+	title = {Real-{Time} {Monocular} {Depth} {Estimation} using {Synthetic} {Data} with {Domain} {Adaptation} via {Image} {Style} {Transfer}},
+	url = {http://openaccess.thecvf.com/content_cvpr_2018/papers/Atapour-Abarghouei_Real-Time_Monocular_Depth_CVPR_2018_paper.pdf},
+	abstract = {Monocular depth estimation using learning-based approaches has become promising in recent years. However, most monocular depth estimators either need to rely on large quantities of ground truth depth data, which is extremely expensive and difficult to obtain, or predict disparity as an intermediary step using a secondary supervisory signal leading to blurring and other artefacts. Training a depth estimation model using pixel-perfect synthetic data can resolve most of these issues but introduces the problem of domain bias. This is the inability to apply a model trained on synthetic data to real-world scenarios. With advances in image style transfer and its connections with domain adaptation (Maximum Mean Discrepancy), we take advantage of style transfer and adversarial training to predict pixel perfect depth from a single real-world color image based on training over a large corpus of synthetic environment data. Experimental results indicate the efficacy of our approach compared to contemporary state-of-the-art techniques.},
+	booktitle = {{IEEE} {Conference} on {Computer} {Vision} and {Pattern} {Recognition}},
+	author = {{Amir Atapour-Abarghouei} and {Toby P. Breckon}},
+	month = jun,
+	year = {2018}
+}
+
+@inproceedings{jae-han_lee_single-image_2018,
+	address = {Salt Lake City, Utah, United States},
+	title = {Single-{Image} {Depth} {Estimation} {Based} on {Fourier} {Domain} {Analysis}},
+	url = {http://openaccess.thecvf.com/content_cvpr_2018/papers/Lee_Single-Image_Depth_Estimation_CVPR_2018_paper.pdf},
+	abstract = {We propose a deep learning algorithm for single-image depth estimation based on the Fourier frequency domain analysis. First, we develop a convolutional neural network structure and propose a new loss function,  called depth-balanced Euclidean loss, to train the network reliably for a wide range of depths. Then, we generate multiple depth map candidates by cropping input images with various cropping ratios. In general, a cropped image with a small ratio yields depth details more faithfully, while that with a large ratio provides the overall depth distribution more reliably.  To take advantage of these complementary properties, we combine the multiple candidates in the frequency domain.   Experimental results demonstrate that proposed algorithm provides the state-of-art performance.  Furthermore, through the frequency domain analysis, we validate the efficacy of the proposed algorithm in most frequency bands.},
+	booktitle = {{IEEE} {Conference} on {Computer} {Vision} and {Pattern} {Recognition}},
+	author = {{Jae-Han Lee} and {Minhyeok Heo} and {Kyung-Rae Kim} and {Chang-Su Kim}},
+	month = jun,
+	year = {2018},
+	pages = {330--339}
+}
+
+@inproceedings{xiaojuan_qi_geonet:_2018,
+	address = {Salt Lake City, Utah, United States},
+	title = {{GeoNet}: {Geometric} {Neural} {Network}
+for {Joint} {Depth} and {Surface} {Normal} {Estimation}},
+	url = {http://openaccess.thecvf.com/content_cvpr_2018/papers/Qi_GeoNet_Geometric_Neural_CVPR_2018_paper.pdf},
+	abstract = {In this paper, we propose Geometric Neural Network (GeoNet) to jointly predict depth and surface normal maps from a single image. Building on top of two-stream CNNs, our GeoNet incorporates geometric relation between depth and surface normal via the new depth-to-normal and normal-to -depth networks. Depth-to-normal network exploits the least square solution of surface normal from depth and improves its quality with a residual module. Normal-to-depth network, contrarily, refines the depth map based on the constraints from the surface normal through a kernel regression module, which has no parameter to learn. These two networks enforce the underlying model to efficiently predict depth and surface normal for high consistency and corresponding accuracy. Our experiments on NYU v2 dataset verify that our GeoNet is able to predict geometrically consistent depth and normal maps. It achieves top performance on surface normal estimation and is on par with state-of-the-art depth estimation methods.},
+	booktitle = {{IEEE} {Conference} on {Computer} {Vision} and {Pattern} {Recognition} ({CVPR})},
+	author = {{Xiaojuan Qi} and {Renjie Liao} and {Zhengzhe Liu} and {Raquel Urtasun} and {Jiaya Jia}},
+	month = jun,
+	year = {2018},
+	pages = {283--291}
+}
+
+@inproceedings{yinda_zhang_deep_2018,
+	address = {Salt Lake City, Utah, United States},
+	title = {Deep {Depth} {Completion} of a {Single} {RGB}-{D} {Image}},
+	url = {http://openaccess.thecvf.com/content_cvpr_2018/papers/Zhang_Deep_Depth_Completion_CVPR_2018_paper.pdf},
+	abstract = {The goal of our work is to complete the depth channel of an RGB-D image. Commodity-grade depth cameras often fail to sense depth for shiny, bright, transparent, and distant surfaces. To address this problem, we train a deep network that takes an RGB image as input and predicts dense surface normals and occlusion boundaries. Those predictions are then combined with raw depth observations provided by the RGB-D camera to solve for depths for all pixels, including those missing in the original observation. This method was chosen over others (e.g., inpainting depths directly) as the result of extensive experiments with a new depth completion benchmark dataset, where holes are filled in training data through the rendering of surface reconstructions created from multiview RGB-D scans. Experiments with different network inputs, depth representations, loss functions, optimization methods, inpainting methods, and deep depth estimation networks show that our proposed approach provides better depth completions than these alternatives.},
+	booktitle = {{IEEE} {Conference} on {Computer} {Vision} and {Pattern} {Recognition} ({CVPR})},
+	author = {{Yinda Zhang} and {Thomas Funkhouser}},
+	month = jun,
+	year = {2018},
+	pages = {175--185}
+}
+
+@article{lei_he_learning_2018,
+	title = {Learning {Depth} from {Single} {Images} with {Deep} {Neural} {Network} {Embedding} {Focal} {Length}},
+	volume = {abs/1803.10039},
+	url = {http://arxiv.org/abs/1803.10039},
+	doi = {10.1109/TIP.2018.2832296},
+	abstract = {Learning depth from a single image, as an important issue in scene understanding, has attracted a lot of attention in the past decade. The accuracy of the depth estimation has been improved from conditional Markov random fields, non-parametric methods, to deep convolutional neural networks most recently. However, there exist inherent ambiguities in recovering 3D from a single 2D image. In this paper, we first prove the ambiguity between the focal length and monocular depth learning, and verify the result using experiments, showing that the focal length has a great influence on accurate depth recovery. In order to learn monocular depth by embedding the focal length, we propose a method to generate synthetic varying-focal-length dataset from fixed-focal-length datasets, and a simple and effective method is implemented to fill the holes in the newly generated images. For the sake of accurate depth recovery, we propose a novel deep neural network to infer depth through effectively fusing the middle-level information on the fixed-focal-length dataset, which outperforms the state-of-the-art methods built on pre-trained VGG. Furthermore, the newly generated varying-focal-length dataset is taken as input to the proposed network in both learning and inference phases. Extensive experiments on the fixed- and varying-focal-length datasets demonstrate that the learned monocular depth with embedded focal length is significantly improved compared to that without embedding the focal length information.},
+	journal = {CoRR},
+	author = {{Lei He} and {Guanghui Wang} and {Zhanyi Hu}},
+	year = {2018}
+}
+
+@inproceedings{david_eigen_depth_2014,
+	address = {Montréal, Canada},
+	title = {Depth {Map} {Prediction} from a {Single} {Image} using a {Multi}-{Scale} {Deep} {Network}},
+	volume = {27},
+	url = {http://papers.nips.cc/paper/5539-depth-map-prediction-from-a-single-image-using-a-multi-scale-deep-network.pdf},
+	abstract = {Predicting depth is an essential component in understanding the 3D geometry of a scene. While for stereo images local correspondence suffices for estimation, finding depth relations from a single image is less straightforward, requiring integration of both global and local information from various cues. Moreover, the task is inherently ambiguous, with a large source of uncertainty coming from the overall scale. In this paper, we present a new method that addresses this task by employing two deep network stacks: one that makes a coarse global prediction based on the entire image, and another that refines this prediction locally. We also apply a scale-invariant error to help measure depth relations rather than scale. By leveraging the raw datasets as large sources of training data, our method achieves state-of-the-art results on both NYU Depth and KITTI, and matches detailed depth boundaries without the need for superpixelation.},
+	booktitle = {Advances in neural information processing systems},
+	publisher = {Curran Associates, Inc.},
+	author = {{David Eigen} and {Christian Puhrsch} and {Rob Fergus}},
+	year = {2014},
+	pages = {2366--2374}
+}
+
+@article{ashutosh_saxena_make3d:_2009,
+	title = {Make3d: {Learning} 3d scene structure from a single still image},
+	volume = {31},
+	issn = {0162-8828},
+	url = {https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=4531745},
+	doi = {10.1109/TPAMI.2008.132},
+	abstract = {We consider the problem of estimating detailed 3D structure from a single still image of an unstructured environment. Our goal is to create 3D models that are both quantitatively accurate as well as visually pleasing. For each small homogeneous patch in the image, we use a Markov Random Field (MRF) to infer a set of   ``plane parameters'' that capture both the 3D location and 3D orientation of the patch. The MRF, trained via supervised learning, models both image depth cues as well as the relationships between different parts of the image. Other than assuming that the environment is made up of a number of small planes, our model makes no explicit assumptions about the structure of the scene; this enables the algorithm to capture much more detailed 3D structure than does prior art and also give a much richer experience in the 3D flythroughs created using image-based rendering, even for scenes with significant nonvertical structure. Using this approach, we have created qualitatively correct 3D models for 64.9 percent of 588 images downloaded from the Internet. We have also extended our model to produce large-scale 3D models from a few images.},
+	number = {5},
+	journal = {IEEE transactions on pattern analysis and machine intelligence},
+	author = {{Ashutosh Saxena} and {Min Sun} and {Andrew Y. Ng}},
+	month = may,
+	year = {2009},
+	pages = {824--840}
+}
+
+@inproceedings{ashutosh_saxena_learning_2006,
+	address = {Hyatt Regency Vancouver, Vancouver, British Columbia, Canada},
+	title = {Learning depth from single monocular images},
+	url = {http://papers.nips.cc/paper/2921-learning-depth-from-single-monocular-images.pdf},
+	abstract = {We consider the task of depth estimation from a single monocular image. We take a supervised learning approach to this problem, in which we begin by collecting a training set of monocular images (of unstructured outdoor environments which include forests, trees, buildings, etc.) and  their  corresponding  ground-truth depthmaps. Then, we apply supervised learning to predict the depthmap as a function of the  image. Depth estimation is a challenging problem, since local features alone are insufficient to estimate depth at a point, and one needs to consider the global context of the image.  Our model uses a discriminatively-trained Markov Random Field (MRF) that incorporates multiscale local- and global-image features, and models both depths at individual points as well as the relation between depths at different points. We show that, even on unstructured scenes, our algorithm is frequently able to recover fairly accurate depthmaps.},
+	booktitle = {Advances in neural information processing systems},
+	author = {{Ashutosh Saxena} and {Sung H. Chung} and {Andrew Y. Ng}},
+	year = {2006},
+	pages = {1161--1168}
+}
+
+@inproceedings{huan_fu_deep_2018,
+	address = {Salt Lake City, Utah, United States},
+	title = {Deep {Ordinal} {Regression} {Network} for {Monocular} {Depth} {Estimation}},
+	url = {http://openaccess.thecvf.com/content_cvpr_2018/papers/Fu_Deep_Ordinal_Regression_CVPR_2018_paper.pdf},
+	abstract = {Monocular depth estimation, which plays a crucial role in understanding 3D scene geometry, is an ill-posed problem. Recent methods have gained significant improvement by exploring image-level information and hierarchical features from deep convolutional neural networks (DCNNs). These methods model depth estimation as a regression problem and train the regression networks by minimizing mean squared error, which suffers from slow convergence and unsatisfactory local solutions. Besides, existing depth estimation networks employ repeated spatial pooling operations, resulting in undesirable low-resolution feature maps. To obtain high-resolution depth maps, skip-connections or multi-layer deconvolution networks are required, which complicates network training and consumes much more computations. To eliminate or at least largely reduce these problems, we introduce a spacing-increasing discretization (SID) strategy to discretize depth and recast depth network learning as an ordinal regression problem. By training the network using an ordinary regression loss, our method achieves much higher accuracy and faster convergence in synch. Furthermore, we adopt a multi-scale network structure which avoids unnecessary spatial pooling and captures multi-scale information in parallel.
+The method described in this paper achieves state-of-the-art results on four challenging benchmarks, i.e., KITTI, ScanNet, Make3D, and NYU Depth v2, and win the 1st prize in Robust Vision Challenge 2018. Code has been made available at: https://github.com/hufu6371/DORN},
+	language = {English},
+	booktitle = {{IEEE} {Conference} on {Computer} {Vision} and {Pattern} {Recognition} ({CVPR})},
+	author = {{Huan Fu} and {Mingming Gong} and {Chaohui Wang} and {Kayhan Batmanghelich} and {Dacheng Tao}},
+	year = {2018},
+	pages = {2002--2011}
+}
+
+
+@article{saloni_bahadur_literature_2017,
+	series = {Recent {Advances} in {Computer} {Science} and {Information} {Technology}},
+	title = {Literature {Review} on {Various} {Depth} {Estimation} {Methods} for an {Image}},
+	volume = {5},
+	issn = {2350-0530},
+	url = {http://granthaalayah.com/Articles/RACSIT/IJRG17_RACSIT_02.pdf},
+	doi = {https://doi.org/10.5281/zenodo.572287},
+	abstract = {In this survey paper, different depth estimation techniques using cues from two images are
+observed. In this paper, different methods for depth estimation like Vergence, Stereo Disparity, Stereo Matching, Familiar Size, Defocus Cue, Convex Optimization, and Sum of Absolute Differences Algorithm are reviewed. Depth is determined by using maximum and minimum disparity.},
+	number = {4},
+	journal = {International Journal of Research - Granthaalayah},
+	author = {{Saloni Bahadur} and {Rashmee Shrestha} and {Yalapi Sumaharshini} and {Gnv Ravi Teja} and {Kalpitha.N}},
+	month = apr,
+	year = {2017},
+	pages = {8--13}
+}
+
+
+
+
+
+
+
+@article{doi:10.1177/0278364913491297,
+author = {A Geiger and P Lenz and C Stiller and R Urtasun},
+title ={Vision meets robotics: The KITTI dataset},
+journal = {The International Journal of Robotics Research},
+volume = {32},
+number = {11},
+pages = {1231-1237},
+year = {2013},
+doi = {10.1177/0278364913491297},
+
+URL = { 
+        https://doi.org/10.1177/0278364913491297
+    
+},
+eprint = { 
+        https://doi.org/10.1177/0278364913491297
+    
+}
+,
+    abstract = { We present a novel dataset captured from a VW station wagon for use in mobile robotics and autonomous driving research. In total, we recorded 6 hours of traffic scenarios at 10–100 Hz using a variety of sensor modalities such as high-resolution color and grayscale stereo cameras, a Velodyne 3D laser scanner and a high-precision GPS/IMU inertial navigation system. The scenarios are diverse, capturing real-world traffic situations, and range from freeways over rural areas to inner-city scenes with many static and dynamic objects. Our data is calibrated, synchronized and timestamped, and we provide the rectified and raw image sequences. Our dataset also contains object labels in the form of 3D tracklets, and we provide online benchmarks for stereo, optical flow, object detection and other tasks. This paper describes our recording platform, the data format and the utilities that we provide. }
+}
+
+@InProceedings{silberman2012indoor,
+author="Silberman, Nathan
+and Hoiem, Derek
+and Kohli, Pushmeet
+and Fergus, Rob",
+title="Indoor Segmentation and Support Inference from RGBD Images",
+booktitle="Computer Vision -- ECCV 2012",
+year="2012",
+publisher="Springer Berlin Heidelberg",
+address="Berlin, Heidelberg",
+pages="746--760",
+abstract="We present an approach to interpret the major surfaces, objects, and support relations of an indoor scene from an RGBD image. Most existing work ignores physical interactions or is applied only to tidy rooms and hallways. Our goal is to parse typical, often messy, indoor scenes into floor, walls, supporting surfaces, and object regions, and to recover support relationships. One of our main interests is to better understand how 3D cues can best inform a structured 3D interpretation. We also contribute a novel integer programming formulation to infer physical support relations. We offer a new dataset of 1449 RGBD images, capturing 464 diverse indoor scenes, with detailed annotations. Our experiments demonstrate our ability to infer support relations in complex scenes and verify that our 3D scene cues and inferred support lead to better object segmentation.",
+isbn="978-3-642-33715-4"
+}
