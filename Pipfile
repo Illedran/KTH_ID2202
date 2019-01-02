@@ -15,16 +15,11 @@ numexpr = "*"   # for speedups
 bottleneck = "*"   # for speedups
 pandas = "*"
 ## PyTorch optional deps
-mkl = "*"
-mkl-include = "*"
-pyaml = "*"
-cmake = "*"
-cffi = "*"
-torch = {file = "http://download.pytorch.org/whl/cpu/torch-0.4.1-cp36-cp36m-linux_x86_64.whl"}
+torch = "*"
 torchvision = "*"
 tensorflow = "*"
-pydot = "*"
 opencv-python = "*"
+torchsummary = "*"
 
 [dev-packages]
 
