@@ -1,5 +1,6 @@
 import keras
-from keras import backend as K
+
+from src.keras_utils import Upsample2DToSize, ordinal_loss, OrdinalSoftmax
 
 
 def DORN_ResNet50_NYUV2(input_shape=(257, 353, 3), n_classes=68):
@@ -43,22 +44,13 @@ def DORN_ResNet50_NYUV2(input_shape=(257, 353, 3), n_classes=68):
     x = keras.layers.Dropout(0.5)(x)
     output = keras.layers.Conv2D(n_classes * 2, kernel_size=1, activation='relu')  # Depth is positive anyway...
     x = output(x)
-    ih, iw = feature_extractor.input_shape[1:3]
-    oh, ow = output.output_shape[1:3]
-    x = keras.layers.UpSampling2D(size=map(round, (ih / oh, iw / ow)),
-                                  interpolation='bilinear')(x)
+    x = keras.layers.Lambda(Upsample2DToSize, arguments={'size': input_shape[:-1]})(x)
+    # Return probability of belonging to each class
+    x = keras.layers.Lambda(OrdinalSoftmax, arguments={'n_classes': n_classes})(x)
+    m = keras.models.Model(inputs=feature_extractor.input, outputs=x)
 
-    def ordinal_layer(input_tensor):
-        decode_label = K.zeros(shape=K.shape(input_tensor)[:-1], dtype=K.floatx())
-        for i in range(n_classes):
-            ord_i = K.argmax(input_tensor[:, :, :, 2 * i:2 * i + 2], axis=-1)
-            decode_label += K.cast(ord_i, K.floatx())
-        return decode_label
-
-    x = keras.layers.Lambda(ordinal_layer)(x)  # Return the max in each prediction class
-    model = keras.models.Model(inputs=feature_extractor.input, outputs=x)
-
-    return model
+    m.compile(optimizer='adam', loss=ordinal_loss)
+    return m
 
 
 def DORN_ResNet50_KITTI(input_shape=(385, 513, 3), n_classes=71):
@@ -102,19 +94,10 @@ def DORN_ResNet50_KITTI(input_shape=(385, 513, 3), n_classes=71):
     x = keras.layers.Dropout(0.5)(x)
     output = keras.layers.Conv2D(n_classes * 2, kernel_size=1, activation='relu')  # Depth is positive anyway...
     x = output(x)
-    ih, iw = feature_extractor.input_shape[1:3]
-    oh, ow = output.output_shape[1:3]
-    x = keras.layers.UpSampling2D(size=map(round, (ih / oh, iw / ow)),
-                                  interpolation='bilinear')(x)
+    x = keras.layers.Lambda(Upsample2DToSize, arguments={'size': input_shape[:-1]})(x)
+    # Return probability of belonging to each class
+    x = keras.layers.Lambda(OrdinalSoftmax, arguments={'n_classes': n_classes})(x)
+    m = keras.models.Model(inputs=feature_extractor.input, outputs=x)
 
-    def ordinal_layer(input_tensor):
-        decode_label = K.zeros(shape=K.shape(input_tensor)[:-1], dtype=K.floatx())
-        for i in range(n_classes):
-            ord_i = K.argmax(input_tensor[:, :, :, 2 * i:2 * i + 2], axis=-1)
-            decode_label += K.cast(ord_i, K.floatx())
-        return decode_label
-
-    x = keras.layers.Lambda(ordinal_layer)(x)  # Return the max in each prediction class
-    model = keras.models.Model(inputs=feature_extractor.input, outputs=x)
-
-    return model
+    m.compile(optimizer='adam', loss=ordinal_loss)
+    return m

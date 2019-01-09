@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def ordinal_thresholds_uniform(beta, n_classes, alpha=0):
     """
     Returns a list of thresholds for ordinal regression given output space [alpha, beta] and number of classes.
@@ -11,10 +12,11 @@ def ordinal_thresholds_uniform(beta, n_classes, alpha=0):
     """
     thresholds = [alpha]
     for i in range(1, n_classes):
-        thresholds.append(alpha+(beta-alpha)/n_classes * i)
+        thresholds.append(alpha + (beta - alpha) / n_classes * i)
 
     thresholds.append(beta)
     return thresholds
+
 
 def ordinal_thresholds_exp(beta, n_classes, alpha=0, eps=1):
     """
@@ -40,15 +42,10 @@ def ordinal_thresholds_exp(beta, n_classes, alpha=0, eps=1):
 def depth_to_ordinal(matrix, thresholds):
     """
     :param matrix: (N, H, W, 1) depth matrix.
-    :return: a (N, H, W) matrix with the corresponding ordinal label.
+    :return: a (N, H, W, C) matrix with the corresponding ordinal labels.
     """
-    ordinal_labels = np.empty_like(matrix, dtype=int)
-    prev = thresholds[0]
+    ordinal_labels = np.empty(shape=matrix.shape[:-1] + (len(thresholds) - 1,), dtype=int)
+    print(ordinal_labels.shape)
     for i, c in enumerate(thresholds[1:]):
-        ordinal_labels[np.bitwise_and(matrix >= prev, matrix < c)] = i
-        prev = c
-    return ordinal_labels.squeeze()
-
-def ordinal_loss(y, y_true):
-    raise NotImplementedError
-
+        ordinal_labels[..., i] = (matrix >= c)[..., 0]
+    return ordinal_labels
