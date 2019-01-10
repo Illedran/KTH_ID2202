@@ -39,6 +39,24 @@ def ordinal_thresholds_exp(beta, n_classes, alpha=0, eps=1):
     return thresholds
 
 
+def ordinal_thresholds_power(beta, n_classes, alpha=0, power=2):
+    """
+    Returns a list of thresholds for ordinal regression given output space [alpha, beta] and number of classes.
+    The space depends on a power-law.
+    :param beta: Maximum value of output space.
+    :param alpha: Minimum value of output space (default = 0).
+    :param n_classes: Number of classes (should equal output of last convolution, default = 100)
+    :param power: Exponent used in the power law. When p=1, equal to uniform.
+    :return: List of thresholds for classes, including the left edge (=alpha) for the first class.
+    """
+    thresholds = [alpha]
+    for i in range(1, n_classes):
+        thresholds.append(alpha + ((i / n_classes) ** power) * (beta - alpha))
+
+    thresholds.append(beta)
+    return thresholds
+
+
 def depth_to_ordinal(matrix, thresholds):
     """
     :param matrix: (N, H, W, 1) depth matrix.
