@@ -82,10 +82,11 @@ def mean_backtranslation(y_pred, thresholds):
     """
     n, h, w, c = y_pred.shape
     backtranslated_depth = np.zeros((n, h, w), dtype=np.float32)
+    ordinal_class = np.sum(y_pred >= 0.5, axis=-1)
     for i in range(n):
         for y in range(h):
             for x in range(w):
-                class_idx = np.argmin(y_pred[i, y, x] > 0.5)
+                class_idx = ordinal_class[i, y, x]
                 backtranslated_depth[i, y, x] = (thresholds[class_idx] + thresholds[class_idx + 1]) / 2
 
     return backtranslated_depth
@@ -100,10 +101,11 @@ def uniform_backtranslation(y_pred, thresholds):
     """
     n, h, w, c = y_pred.shape
     backtranslated_depth = np.zeros((n, h, w), dtype=np.float32)
+    ordinal_class = np.sum(y_pred >= 0.5, axis=-1)
     for i in range(n):
         for y in range(h):
             for x in range(w):
-                class_idx = np.argmin(y_pred[i, y, x] > 0.5)
+                class_idx = ordinal_class[i, y, x]
                 p = y_pred[i, y, x, class_idx]
                 backtranslated_depth[i, y, x] = (1 - p) * thresholds[class_idx] + p * thresholds[class_idx + 1]
 
@@ -134,4 +136,3 @@ def test_generator(hdf_archive_path, batch_size=4):
         while i < len(X):
             yield X[i:i + batch_size]
             i += batch_size
-
