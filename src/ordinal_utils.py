@@ -1,3 +1,4 @@
+import h5py
 import numpy as np
 
 
@@ -86,6 +87,7 @@ def mean_backtranslation(y_pred, thresholds):
 
     return backtranslated_depth
 
+
 def uniform_backtranslation(y_pred, thresholds):
     """
 
@@ -99,11 +101,54 @@ def uniform_backtranslation(y_pred, thresholds):
         for y in range(h):
             for x in range(w):
                 class_idx = np.argmin(y_pred[i, y, x] >= 0.5)
-                p = y_pred[i,y,x, class_idx]
-                backtranslated_depth[i, y, x] = (1-p) * thresholds[class_idx] + p * thresholds[class_idx + 1]
+                p = y_pred[i, y, x, class_idx]
+                backtranslated_depth[i, y, x] = (1 - p) * thresholds[class_idx] + p * thresholds[class_idx + 1]
 
     return backtranslated_depth
 
 
 def relative_error(y_true, y_pred):
     return np.mean(np.abs(y_true - y_pred) / (y_true + np.finfo(np.float32).tiny))
+
+
+def train_generator(hdf_archive_path, batch_size=4):
+    with h5py.File(hdf_archive_path, 'r') as archive:
+        X = archive['X_train']
+        y = archive['y_train']
+        assert len(X) == len(y)
+        idxes = np.random.permutation(len(X))
+        i = 0
+        while i < len(X):
+            yield X[idxes][i:i + batch_size], y[idxes][i:i + batch_size]
+            i += batch_size
+
+
+def test_generator(hdf_archive_path, batch_size=4):
+    with h5py.File(hdf_archive_path, 'r') as archive:
+        X = archive['X_test']
+        y = archive['y_test']
+        assert len(X) == len(y)
+        idxes = np.random.permutation(len(X))
+        i = 0
+        while i < len(X):
+            yield X[idxes][i:i + batch_size]
+            i += batch_size
+
+# from src.dorn_keras import DORN_ResNet50_NYUV2
+#
+# dataset = ".."
+# n_epochs = 100
+# batch_size = 4
+# thresh = ordinal_thresholds_exp(beta=80, n_classes=68)
+#
+# model = DORN_ResNet50_NYUV2()
+# for i in range(n_epochs):
+#     train_gen = train_generator(dataset, batch_size)
+#     model.fit_generator(train_gen)
+#     if i + 1 % 10 == 0:
+#         pred = []
+#         for X_test, y_test in test_generator(dataset, batch_size):
+#             pred.append(model.predict_on_batch(X_test))
+#         y_pred = np.stack(pred)
+#         y_pred = mean_backtranslation(y_pred, thresh)
+#         print("RelErr:", relative_error(y_test, y_pred))
