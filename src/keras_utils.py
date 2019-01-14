@@ -41,4 +41,5 @@ def ordinal_loss(y_true, y_pred):
     loss_on_prev_classes = K.sum(K.log(y_pred) * y_true, axis=-1)
     loss_on_next_classes = K.sum((1 - K.log(y_pred)) * (1 - y_true), axis=-1)
 
-    return -K.mean(loss_on_prev_classes + loss_on_next_classes)
+    return K.abs(K.mean(loss_on_prev_classes + loss_on_next_classes))
+

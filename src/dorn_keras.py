@@ -49,7 +49,6 @@ def DORN_ResNet50_NYUV2(input_shape=(257, 353, 3), n_classes=68):
     x = keras.layers.Lambda(OrdinalSoftmax, arguments={'n_classes': n_classes})(x)
     m = keras.models.Model(inputs=feature_extractor.input, outputs=x)
 
-    m.compile(optimizer='adam', loss=ordinal_loss)
     return m
 
 
@@ -99,5 +98,16 @@ def DORN_ResNet50_KITTI(input_shape=(385, 513, 3), n_classes=71):
     x = keras.layers.Lambda(OrdinalSoftmax, arguments={'n_classes': n_classes})(x)
     m = keras.models.Model(inputs=feature_extractor.input, outputs=x)
 
-    m.compile(optimizer='adam', loss=ordinal_loss)
     return m
+
+
+from src.dorn_keras import DORN_ResNet50_NYUV2
+import numpy as np
+
+n_classes = 10
+X_train = np.empty((40, 257, 353, 3), dtype=np.float32)
+y_train = np.empty((40, 257, 353, n_classes), dtype=np.float32)
+
+dorn_model = DORN_ResNet50_NYUV2(n_classes=n_classes)
+dorn_model.compile(optimizer='adam', loss='binary_crossentropy')
+
