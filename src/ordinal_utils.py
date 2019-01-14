@@ -134,5 +134,5 @@ def test_generator(hdf_archive_path, batch_size=4):
         assert len(X) == len(y)
         i = 0
         while i < len(X):
-            yield X[i:i + batch_size]
+            yield X[i:i + batch_size], y[i:i + batch_size]
             i += batch_size
