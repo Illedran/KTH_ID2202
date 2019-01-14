@@ -20,6 +20,8 @@ torchvision = "*"
 tensorflow = "*"
 opencv-python = "*"
 torchsummary = "*"
+h5py = "*"
+tqdm = "*"
 
 [dev-packages]
 

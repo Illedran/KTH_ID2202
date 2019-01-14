@@ -63,10 +63,13 @@ def depth_to_ordinal(matrix, thresholds):
     :param matrix: (N, H, W) depth matrix.
     :return: a (N, H, W, C) matrix with the corresponding ordinal labels.
     """
-    ordinal_labels = np.empty(shape=matrix.shape[:-1] + (len(thresholds) - 1,), dtype=int)
-    print(ordinal_labels.shape)
+    ordinal_labels = np.zeros(shape=matrix.shape + (len(thresholds) - 1,), dtype=int)
     for i, c in enumerate(thresholds[1:]):
-        ordinal_labels[..., i] = (matrix > c)[..., 0]
+        membership_matrix = matrix > c
+        if np.any(membership_matrix):
+            ordinal_labels[..., i] += membership_matrix
+        else:
+            break
     return ordinal_labels
 
 
@@ -82,7 +85,7 @@ def mean_backtranslation(y_pred, thresholds):
     for i in range(n):
         for y in range(h):
             for x in range(w):
-                class_idx = np.argmin(y_pred[i, y, x] >= 0.5)
+                class_idx = np.argmin(y_pred[i, y, x] > 0.5)
                 backtranslated_depth[i, y, x] = (thresholds[class_idx] + thresholds[class_idx + 1]) / 2
 
     return backtranslated_depth
@@ -100,7 +103,7 @@ def uniform_backtranslation(y_pred, thresholds):
     for i in range(n):
         for y in range(h):
             for x in range(w):
-                class_idx = np.argmin(y_pred[i, y, x] >= 0.5)
+                class_idx = np.argmin(y_pred[i, y, x] > 0.5)
                 p = y_pred[i, y, x, class_idx]
                 backtranslated_depth[i, y, x] = (1 - p) * thresholds[class_idx] + p * thresholds[class_idx + 1]
 
