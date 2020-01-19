@@ -136,3 +136,15 @@ def test_generator(hdf_archive_path, batch_size=4):
         while i < len(X):
             yield X[i:i + batch_size], y[i:i + batch_size]
             i += batch_size
+
+
+def val_generator(hdf_archive_path, batch_size=4):
+    with h5py.File(hdf_archive_path, 'r') as archive:
+        X = archive['X_test']
+        y = archive['y_test_ordinal']
+        assert len(X) == len(y)
+        i = 0
+        while i < len(X):
+            yield X[i:i + batch_size], y[i:i + batch_size]
+            i += batch_size
+

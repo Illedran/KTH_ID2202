@@ -13,7 +13,7 @@ def DORN_ResNet50_NYUV2(input_shape=(257, 353, 3), n_classes=68):
 
     # Components of Scene Understanding Modular
     # 1) Full-image encoder
-    enc = keras.layers.AveragePooling2D(pool_size=(3, 3))(feature_extractor.outputs[0])
+    enc = keras.layers.AveragePooling2D(pool_size=(2, 2))(feature_extractor.outputs[0])
     enc = keras.layers.Dropout(0.5)(enc)
     enc = keras.layers.Flatten()(enc)
     enc = keras.layers.Dense(512, activation='relu')(enc)
@@ -26,15 +26,15 @@ def DORN_ResNet50_NYUV2(input_shape=(257, 353, 3), n_classes=68):
     aspp1 = keras.layers.Conv2D(512, kernel_size=1, activation='relu')(feature_extractor.outputs[0])
     aspp1 = keras.layers.Conv2D(512, kernel_size=1, activation='relu')(aspp1)
 
-    aspp2 = keras.layers.Conv2D(512, padding='same', dilation_rate=3, kernel_size=3, strides=1, activation='relu')(
+    aspp2 = keras.layers.Conv2D(512, padding='same', dilation_rate=2, kernel_size=2, strides=1, activation='relu')(
         feature_extractor.outputs[0])
     aspp2 = keras.layers.Conv2D(512, kernel_size=1, activation='relu')(aspp2)
 
-    aspp3 = keras.layers.Conv2D(512, padding='same', dilation_rate=6, kernel_size=3, strides=1, activation='relu')(
+    aspp3 = keras.layers.Conv2D(512, padding='same', dilation_rate=4, kernel_size=2, strides=1, activation='relu')(
         feature_extractor.outputs[0])
     aspp3 = keras.layers.Conv2D(512, kernel_size=1, activation='relu')(aspp3)
 
-    aspp4 = keras.layers.Conv2D(512, padding='same', dilation_rate=9, kernel_size=3, strides=1, activation='relu')(
+    aspp4 = keras.layers.Conv2D(512, padding='same', dilation_rate=6, kernel_size=2, strides=1, activation='relu')(
         feature_extractor.outputs[0])
     aspp4 = keras.layers.Conv2D(512, kernel_size=1, activation='relu')(aspp4)
 
@@ -42,11 +42,10 @@ def DORN_ResNet50_NYUV2(input_shape=(257, 353, 3), n_classes=68):
     x = keras.layers.Dropout(0.5)(x)
     x = keras.layers.Conv2D(2048, kernel_size=1, activation='relu')(x)
     x = keras.layers.Dropout(0.5)(x)
-    output = keras.layers.Conv2D(n_classes * 2, kernel_size=1, activation='relu')  # Depth is positive anyway...
+    output = keras.layers.Conv2D(n_classes, kernel_size=1, activation='sigmoid')  # Depth is positive anyway...
     x = output(x)
     x = keras.layers.Lambda(Upsample2DToSize, arguments={'size': input_shape[:-1]})(x)
     # Return probability of belonging to each class
-    x = keras.layers.Lambda(OrdinalSoftmax, arguments={'n_classes': n_classes})(x)
     m = keras.models.Model(inputs=feature_extractor.input, outputs=x)
 
     return m
